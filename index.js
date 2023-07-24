@@ -1,5 +1,5 @@
 //dependecies
-const { readFile, writeFile } = require('fs/promises');
+const { writeFile } = require('fs/promises');
 const inquirer = require('inquirer');
 const shapes = require('./lib/shapes.js');
 
@@ -28,31 +28,29 @@ const questions = [
     }
 ]
 
-
-//
+//main function
 function init() {
     //start up inquirer, then call writeToFile()
     inquirer.prompt(questions)
     .then((data) => {
         const {text, textColor, shape, shapeColor} = data;
         let svg = ``;
+        var renderShape;
         switch (shape) {
             case 'circle':
-                const circle = new shapes.Circle(text, textColor, shape, shapeColor);
-                svg = circle.renderSVG(circle.renderText(), circle.render());
+                renderShape = new shapes.Circle(text, textColor, shape, shapeColor);
                 break;
-        
             case 'triangle':
-                const triangle = new shapes.Triangle(text, textColor, shape, shapeColor);
-                svg = triangle.renderSVG(triangle.renderText(), triangle.render());
+                renderShape = new shapes.Triangle(text, textColor, shape, shapeColor);
                 break;
             case 'square':
-                const square = new shapes.Square(text, textColor, shape, shapeColor);
-                svg = square.renderSVG(square.renderText(), square.render());
+                renderShape = new shapes.Square(text, textColor, shape, shapeColor);
                 break;
         }
-        return writeFile('./examples/logo.svg',svg);
+        svg = renderShape.renderSVG(renderShape.renderText(), renderShape.render());
+        return svg;
     })
+    .then((svg) => writeFile('./examples/logo.svg',svg)) 
     .catch((err) => {
         console.log(err,'\nUnable to read data');
     });
