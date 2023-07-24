@@ -48,9 +48,9 @@ function init() {
                 break;
         }
         svg = renderShape.renderSVG(renderShape.renderText(), renderShape.render());
-        return svg;
+        return {text: text, svg: svg};
     })
-    .then((svg) => writeFile('./examples/logo.svg',svg)) 
+    .then((info) => writeFile(`./examples/${info.text}.svg`, info.svg)) 
     .catch((err) => {
         console.log(err,'\nUnable to read data');
     });
@@ -61,4 +61,4 @@ init();
 
 
 
-//55.620,160 244.370,160 150,0
+// euilateral triangle: 55.620,160 244.370,160 150,0
