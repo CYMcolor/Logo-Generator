@@ -28,8 +28,7 @@ const questions = [
                return 'Invalid color, enter again';
             }
             return true;
-         }
-        
+         }   
     },
     {
         type: 'list',
@@ -78,7 +77,3 @@ function init() {
 
 // Function call to initialize app
 init();
-
-
-
-// equilateral triangle: 55.620,160 244.370,160 150,0
